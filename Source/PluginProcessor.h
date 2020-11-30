@@ -1,9 +1,7 @@
 /*
   ==============================================================================
 
-    This file was auto-generated!
-
-    It contains the basic framework code for a JUCE plugin processor.
+    This file contains the basic framework code for a JUCE plugin processor.
 
   ==============================================================================
 */
@@ -11,64 +9,70 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "SynthVoice.h"
-#include "SynthSound.h"
+#include "BuchlaSynth.h"
+
+class PresetListBox;
 
 //==============================================================================
 /**
 */
-class JuceSynthFrameworkAudioProcessor  : public AudioProcessor
+class VBuchla700AudioProcessor  : public juce::AudioProcessor
 {
 public:
     //==============================================================================
-    JuceSynthFrameworkAudioProcessor();
-    ~JuceSynthFrameworkAudioProcessor();
+    VBuchla700AudioProcessor();
 
     //==============================================================================
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
 
-#ifndef JucePlugin_PreferredChannelConfigurations
-    bool isBusesLayoutSupported (const BusesLayout& layouts) const override;
-#endif
+   #ifndef JucePlugin_PreferredChannelConfigurations
+    bool isBusesLayoutSupported (const juce::AudioProcessor::BusesLayout& layouts) const override;
+   #endif
 
-    void processBlock (AudioSampleBuffer&, MidiBuffer&) override;
+    void processBlock (juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
 
     //==============================================================================
-    AudioProcessorEditor* createEditor() override;
+    juce::AudioProcessorEditor* createEditor() override;
     bool hasEditor() const override;
 
     //==============================================================================
-    const String getName() const override;
+    void savePresetInternal();
+    void loadPresetInternal(int index);
+
+    //==============================================================================
+    void getStateInformation (juce::MemoryBlock& destData) override;
+    void setStateInformation (const void* data, int sizeInBytes) override;
+
+    //==============================================================================
+    const juce::String getName() const override;
 
     bool acceptsMidi() const override;
     bool producesMidi() const override;
-    bool isMidiEffect () const override;
+    bool isMidiEffect() const override;
     double getTailLengthSeconds() const override;
 
     //==============================================================================
     int getNumPrograms() override;
     int getCurrentProgram() override;
     void setCurrentProgram (int index) override;
-    const String getProgramName (int index) override;
-    void changeProgramName (int index, const String& newName) override;
-
-    //==============================================================================
-    void getStateInformation (MemoryBlock& destData) override;
-    void setStateInformation (const void* data, int sizeInBytes) override;
-
-    void updateFilter();
-
-    AudioProcessorValueTreeState tree;
+    const juce::String getProgramName (int index) override;
+    void changeProgramName (int index, const juce::String& newName) override;
 
 private:
-    Synthesiser mySynth;
-    SynthVoice* myVoice;
-
-    dsp::ProcessorDuplicator<dsp::StateVariableFilter::Filter<float> , dsp::StateVariableFilter::Parameters<float>> stateVariableFilter;
-
-    double lastSampleRate;
-
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (JuceSynthFrameworkAudioProcessor)
+    juce::AudioProcessorValueTreeState treeState;
+
+        BuchlaSynth      synthesiser;
+        juce::ValueTree  presetNode;
+
+        // GUI MAGIC: define that as last member of your AudioProcessor
+        foleys::MagicProcessorState magicState { *this, treeState };
+        foleys::MagicLevelSource*   outputMeter  = nullptr;
+        foleys::MagicPlotSource*    oscilloscope = nullptr;
+        foleys::MagicPlotSource*    analyser     = nullptr;
+
+        PresetListBox*              presetList   = nullptr;
+    
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (VBuchla700AudioProcessor)
 };

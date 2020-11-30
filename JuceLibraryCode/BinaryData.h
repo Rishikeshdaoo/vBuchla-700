@@ -8,23 +8,14 @@
 
 namespace BinaryData
 {
-    extern const char*   background_png;
-    const int            background_pngSize = 18347;
+    extern const char*   Logo_png;
+    const int            Logo_pngSize = 57997;
 
-    extern const char*   maximilianTest_xccheckout;
-    const int            maximilianTest_xccheckoutSize = 1501;
-
-    extern const char*   maximilianTest_10_8_xccheckout;
-    const int            maximilianTest_10_8_xccheckoutSize = 1511;
-
-    extern const char*   contents_xcworkspacedata;
-    const int            contents_xcworkspacedataSize = 159;
-
-    extern const char*   project_pbxproj;
-    const int            project_pbxprojSize = 17839;
+    extern const char*   magic_xml;
+    const int            magic_xmlSize = 6957;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 5;
+    const int namedResourceListSize = 2;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];
