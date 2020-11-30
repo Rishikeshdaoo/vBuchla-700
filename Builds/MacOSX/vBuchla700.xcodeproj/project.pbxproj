@@ -349,6 +349,13 @@
 			path = System/Library/Frameworks/AudioUnit.framework;
 			sourceTree = SDKROOT;
 		};
+		4751E26578D9FBF5144AA081 = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			name = "juce_gui_extra";
+			path = "/Applications/JUCE/modules/juce_gui_extra";
+			sourceTree = "<absolute>";
+		};
 		49A6B45E1018B0754A8B9A34 = {
 			isa = PBXFileReference;
 			lastKnownFileType = file;
@@ -368,6 +375,13 @@
 			lastKnownFileType = file;
 			name = "juce_events";
 			path = "/Applications/JUCE/modules/juce_events";
+			sourceTree = "<absolute>";
+		};
+		5AE4558255D275688DD986B7 = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			name = "juce_core";
+			path = "/Applications/JUCE/modules/juce_core";
 			sourceTree = "<absolute>";
 		};
 		C3F27B4C239AEB54C8204CFF = {
@@ -419,20 +433,6 @@
 			path = libvBuchla700.a;
 			sourceTree = "BUILT_PRODUCTS_DIR";
 		};
-		4751E26578D9FBF5144AA081 = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			name = "juce_gui_extra";
-			path = "/Applications/JUCE/modules/juce_gui_extra";
-			sourceTree = "<absolute>";
-		};
-		5AE4558255D275688DD986B7 = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			name = "juce_core";
-			path = "/Applications/JUCE/modules/juce_core";
-			sourceTree = "<absolute>";
-		};
 		6FC557A76E7DC44AD0E977A7 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -445,13 +445,6 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = PresetListBox.h;
 			path = ../../Source/PresetListBox.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		797A1923D768E10A3FCAF8A3 = {
-			isa = PBXFileReference;
-			lastKnownFileType = file.xml;
-			name = magic.xml;
-			path = ../../Resources/magic.xml;
 			sourceTree = "SOURCE_ROOT";
 		};
 		79D665506624AE64DECFD19F = {
@@ -580,6 +573,13 @@
 			path = ../../Source/BuchlaSynth.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		CF048624480CE5AF8BB343D0 = {
+			isa = PBXFileReference;
+			lastKnownFileType = file.xml;
+			name = buchla700.xml;
+			path = ../../Resources/buchla700.xml;
+			sourceTree = "SOURCE_ROOT";
+		};
 		D131DA8FE8AA6A943D8334C9 = {
 			isa = PBXFileReference;
 			lastKnownFileType = file;
@@ -621,13 +621,6 @@
 			name = OpenGL.framework;
 			path = System/Library/Frameworks/OpenGL.framework;
 			sourceTree = SDKROOT;
-		};
-		EA949165CD2317DFF67D93CC = {
-			isa = PBXFileReference;
-			lastKnownFileType = image.png;
-			name = Logo.png;
-			path = ../../Resources/Logo.png;
-			sourceTree = "SOURCE_ROOT";
 		};
 		EF1EA4E38A6F494BE1BEF2AA = {
 			isa = PBXFileReference;
@@ -700,8 +693,7 @@
 		051F7396AC653751A1A5645C = {
 			isa = PBXGroup;
 			children = (
-				EA949165CD2317DFF67D93CC,
-				797A1923D768E10A3FCAF8A3,
+				CF048624480CE5AF8BB343D0,
 			);
 			name = Resources;
 			sourceTree = "<group>";

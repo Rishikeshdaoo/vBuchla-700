@@ -40,7 +40,6 @@ VBuchla700AudioProcessor::VBuchla700AudioProcessor()
     // MAGIC GUI: add a meter at the output
     outputMeter  = magicState.createAndAddObject<foleys::MagicLevelSource>("output");
     oscilloscope = magicState.createAndAddObject<foleys::MagicOscilloscope>("waveform");
-
     analyser     = magicState.createAndAddObject<foleys::MagicAnalyser>("analyser");
     magicState.addBackgroundProcessing (analyser);
 
@@ -153,7 +152,7 @@ bool VBuchla700AudioProcessor::hasEditor() const
 juce::AudioProcessorEditor* VBuchla700AudioProcessor::createEditor()
 {
     // MAGIC GUI: create the generated editor
-    return new foleys::MagicPluginEditor (magicState, BinaryData::magic_xml, BinaryData::magic_xmlSize);
+    return new foleys::MagicPluginEditor (magicState, BinaryData::buchla700_xml, BinaryData::buchla700_xmlSize);
 }
 
 //==============================================================================

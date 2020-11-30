@@ -30,14 +30,44 @@ public:
         bool appliesToNote (int) override { return true; }
         bool appliesToChannel (int) override { return true; }
 
-        juce::ADSR::Parameters getADSR();
-
+        juce::ADSR::Parameters getVCA1();
+        juce::ADSR::Parameters getVCA2();
+        juce::ADSR::Parameters getVCA3();
+        juce::ADSR::Parameters getVCA4();
+        juce::ADSR::Parameters getVCA5();
+    
     private:
         juce::AudioProcessorValueTreeState& state;
         juce::AudioParameterFloat* attack  = nullptr;
         juce::AudioParameterFloat* decay   = nullptr;
         juce::AudioParameterFloat* sustain = nullptr;
         juce::AudioParameterFloat* release = nullptr;
+        
+        juce::AudioParameterFloat* attack2  = nullptr;
+        juce::AudioParameterFloat* decay2   = nullptr;
+        juce::AudioParameterFloat* sustain2 = nullptr;
+        juce::AudioParameterFloat* release2 = nullptr;
+
+        juce::AudioParameterFloat* attack3  = nullptr;
+        juce::AudioParameterFloat* decay3   = nullptr;
+        juce::AudioParameterFloat* sustain3 = nullptr;
+        juce::AudioParameterFloat* release3 = nullptr;
+
+        juce::AudioParameterFloat* attack4  = nullptr;
+        juce::AudioParameterFloat* decay4   = nullptr;
+        juce::AudioParameterFloat* sustain4 = nullptr;
+        juce::AudioParameterFloat* release4 = nullptr;
+
+        juce::AudioParameterFloat* attack5  = nullptr;
+        juce::AudioParameterFloat* decay5   = nullptr;
+        juce::AudioParameterFloat* sustain5 = nullptr;
+        juce::AudioParameterFloat* release5 = nullptr;
+
+        juce::AudioParameterFloat* attack6  = nullptr;
+        juce::AudioParameterFloat* decay6   = nullptr;
+        juce::AudioParameterFloat* sustain6 = nullptr;
+        juce::AudioParameterFloat* release6 = nullptr;
+        
         juce::AudioParameterFloat* gain    = nullptr;
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (BuchlaSound)
@@ -95,7 +125,12 @@ public:
         const int                   internalBufferSize = 64;
         juce::AudioBuffer<float>    oscillatorBuffer;
         juce::AudioBuffer<float>    voiceBuffer;
-        juce::ADSR                  adsr;
+        juce::ADSR                  vca1;
+        juce::ADSR                  vca2;
+        juce::ADSR                  vca3;
+        juce::ADSR                  vca4;
+        juce::ADSR                  vca5;
+        juce::ADSR                  vca6;
         juce::AudioParameterFloat*  gainParameter = nullptr;
         float                       lastGain = 0.0;
 

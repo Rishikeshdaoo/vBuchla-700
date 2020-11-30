@@ -14,8 +14,7 @@
             file="Source/PluginProcessor.h"/>
     </GROUP>
     <GROUP id="{47A5DC78-12E3-3E41-263D-54C04E1C9720}" name="Resources">
-      <FILE id="ZBNPU3" name="Logo.png" compile="0" resource="1" file="Resources/Logo.png"/>
-      <FILE id="t6pjqz" name="magic.xml" compile="0" resource="1" file="Resources/magic.xml"/>
+      <FILE id="meR96A" name="buchla700.xml" compile="0" resource="1" file="Resources/buchla700.xml"/>
     </GROUP>
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>

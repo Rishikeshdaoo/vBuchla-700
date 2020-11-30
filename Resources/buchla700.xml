@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<magic>
+  <Styles>
+    <Style name="default">
+      <Nodes/>
+      <Classes>
+        <plot-view border="2" background-color="black" border-color="silver" display="contents"/>
+        <nomargin margin="0" padding="0" border="0"/>
+        <group margin="5" padding="5" border="2" flex-direction="column"/>
+      </Classes>
+      <Types>
+        <Slider border="0" slider-textbox="textbox-below" lookAndFeel="Skeuomorphic"/>
+        <ToggleButton border="0" max-height="50" caption-size="0" text="Active"/>
+        <TextButton border="0" max-height="50" caption-size="0"/>
+        <ComboBox border="0" max-height="50" caption-size="0"/>
+        <Plot border="0" margin="0" padding="0" background-color="00000000"
+              radius="0"/>
+        <XYDragComponent border="0" margin="0" padding="0" background-color="00000000"
+                         radius="0"/>
+      </Types>
+      <Palettes>
+        <default/>
+      </Palettes>
+    </Style>
+  </Styles>
+  <View id="root" resizable="1" resize-corner="1" flex-direction="column"
+        background-color="FF010411">
+    <View caption="Oscillators" class="group" flex-direction="row" background-color="FF213D5E"
+          lookAndFeel="Skeuomorphic">
+      <Slider caption="Oscillator 1" parameter="osc0" lookAndFeel="Skeuomorphic"/>
+      <Slider caption="Oscillator 2" parameter="osc1" lookAndFeel="Skeuomorphic"/>
+      <Slider caption="Oscillator 3" parameter="osc2" lookAndFeel="Skeuomorphic"/>
+      <Slider caption="Oscillator 4" parameter="osc3" lookAndFeel="Skeuomorphic"/>
+    </View>
+    <View flex-shrink="1.0" flex-grow="0.2" display="flexbox" flex-direction="row"
+          flex-align-self="stretch" flex-align-content="stretch" flex-wrap="nowrap"
+          padding="" margin="" border="">
+      <Slider lookAndFeel="Skeuomorphic"/>
+      <Slider lookAndFeel="Skeuomorphic"/>
+      <Slider lookAndFeel="Skeuomorphic"/>
+      <Slider lookAndFeel="Skeuomorphic"/>
+    </View>
+    <View flex-direction="row">
+      <View caption="ADSR" class="group" flex-direction="row" flex-grow="10"
+            background-color="FF213D5E" display="flexbox" lookAndFeel="Skeuomorphic">
+        <View>
+          <Slider caption="Attack" parameter="attack" lookAndFeel="Skeuomorphic"
+                  caption-placement="centred-top" caption-size="11"/>
+          <Slider caption="Decay" parameter="decay" lookAndFeel="Skeuomorphic"
+                  caption-size="11"/>
+          <Slider caption="Sustain" parameter="sustain" lookAndFeel="Skeuomorphic"
+                  caption-size="11"/>
+          <Slider caption="Release" parameter="release" lookAndFeel="Skeuomorphic"
+                  caption-size="11"/>
+        </View>
+        <View>
+          <Slider caption="Attack" parameter="attack2" caption-size="11"/>
+          <Slider caption="Decay" parameter="decay2" caption-size="11"/>
+          <Slider caption="Sustain" parameter="sustain2" caption-size="11"/>
+          <Slider caption="Release" parameter="release2" caption-size="11"/>
+        </View>
+        <View>
+          <Slider caption="Attack" caption-size="11" parameter="attack3"/>
+          <Slider caption="Decay" caption-size="11" parameter="decay3"/>
+          <Slider caption="Sustain" caption-size="11" parameter="sustain3"/>
+          <Slider caption="Release" caption-size="11" parameter="release3"/>
+        </View>
+        <View>
+          <Slider caption="Attack" caption-size="11" parameter="attack4"/>
+          <Slider caption="Decay" caption-size="11" parameter="decay4"/>
+          <Slider caption="Sustain" caption-size="11" parameter="sustain4"/>
+          <Slider caption="Release" caption-size="11" parameter="release4"/>
+        </View>
+        <View>
+          <Slider caption="Attack" caption-size="11" parameter="attack5"/>
+          <Slider caption="Decay" caption-size="11" parameter="decay5"/>
+          <Slider caption="Sustain" caption-size="11" parameter="sustain5"/>
+          <Slider caption="Release" caption-size="11" parameter="release5"/>
+        </View>
+        <View>
+          <Slider caption="Attack" caption-size="11" parameter="attack6"/>
+          <Slider caption="Decay" caption-size="11" parameter="decay6"/>
+          <Slider caption="Sustain" caption-size="11" parameter="sustain6"/>
+          <Slider caption="Release" caption-size="11" parameter="release6"/>
+        </View>
+      </View>
+      <View caption="Output" class="group" background-color="FF213D5E">
+        <Slider caption="Gain" parameter="gain" lookAndFeel="Skeuomorphic"/>
+      </View>
+    </View>
+    <KeyboardComponent flex-shrink="1.0" flex-grow="0.8"/>
+  </View>
+</magic>

@@ -8,14 +8,11 @@
 
 namespace BinaryData
 {
-    extern const char*   Logo_png;
-    const int            Logo_pngSize = 57997;
-
-    extern const char*   magic_xml;
-    const int            magic_xmlSize = 6957;
+    extern const char*   buchla700_xml;
+    const int            buchla700_xmlSize = 4739;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 2;
+    const int namedResourceListSize = 1;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];
