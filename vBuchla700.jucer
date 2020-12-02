@@ -5,6 +5,25 @@
               pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn">
   <MAINGROUP id="noBnn0" name="vBuchla700">
     <GROUP id="{6C090049-8A29-0D35-BB63-DD92877BE820}" name="Source">
+      <FILE id="UN8gBZ" name="C74_GENPLUGIN.cpp" compile="1" resource="0"
+            file="Source/C74_GENPLUGIN.cpp"/>
+      <FILE id="AYg9RQ" name="C74_GENPLUGIN.h" compile="0" resource="0" file="Source/C74_GENPLUGIN.h"/>
+      <GROUP id="{D8B150FB-5699-CB79-A19F-70DCA6C743A6}" name="gen_dsp">
+        <FILE id="Bg0Jx0" name="genlib.cpp" compile="1" resource="0" file="Source/gen_dsp/genlib.cpp"/>
+        <FILE id="EOENNO" name="genlib.h" compile="0" resource="0" file="Source/gen_dsp/genlib.h"/>
+        <FILE id="MNynAr" name="genlib_common.h" compile="0" resource="0" file="Source/gen_dsp/genlib_common.h"/>
+        <FILE id="edmGc7" name="genlib_common_win.h" compile="0" resource="0"
+              file="Source/gen_dsp/genlib_common_win.h"/>
+        <FILE id="lXeOqy" name="genlib_exportfunctions.h" compile="0" resource="0"
+              file="Source/gen_dsp/genlib_exportfunctions.h"/>
+        <FILE id="bq6L3F" name="genlib_ops.h" compile="0" resource="0" file="Source/gen_dsp/genlib_ops.h"/>
+        <FILE id="xpt2AO" name="genlib_platform.h" compile="0" resource="0"
+              file="Source/gen_dsp/genlib_platform.h"/>
+        <FILE id="MS9ctT" name="json.c" compile="1" resource="0" file="Source/gen_dsp/json.c"/>
+        <FILE id="yzEQKT" name="json.h" compile="0" resource="0" file="Source/gen_dsp/json.h"/>
+        <FILE id="hv7k1m" name="json_builder.c" compile="1" resource="0" file="Source/gen_dsp/json_builder.c"/>
+        <FILE id="jV8Ihy" name="json_builder.h" compile="0" resource="0" file="Source/gen_dsp/json_builder.h"/>
+      </GROUP>
       <FILE id="gDOxeU" name="BuchlaSynth.cpp" compile="1" resource="0" file="Source/BuchlaSynth.cpp"/>
       <FILE id="WwLnxx" name="BuchlaSynth.h" compile="0" resource="0" file="Source/BuchlaSynth.h"/>
       <FILE id="rMV3BL" name="PresetListBox.h" compile="0" resource="0" file="Source/PresetListBox.h"/>
@@ -21,7 +40,8 @@
   <EXPORTFORMATS>
     <XCODE_MAC targetFolder="Builds/MacOSX">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" targetName="vBuchla700"/>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="vBuchla700" headerPath="/Users/seeker/Study/Sem3/VIP/gittu/Source/&#10;/Users/seeker/Study/Sem3/VIP/gittu/Source/gen_dsp/"
+                       vst3BinaryLocation="/Library/Audio/Plug-Ins/VST3/"/>
         <CONFIGURATION isDebug="0" name="Release" targetName="vBuchla700"/>
       </CONFIGURATIONS>
       <MODULEPATHS>

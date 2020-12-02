@@ -133,9 +133,9 @@ void VBuchla700AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
         buffer.clear (i, 0, buffer.getNumSamples());
 
     synthesiser.renderNextBlock (buffer, midiMessages, 0, buffer.getNumSamples());
-
-    for (int i = 1; i < buffer.getNumChannels(); ++i)
-        buffer.copyFrom (i, 0, buffer.getReadPointer (0), buffer.getNumSamples());
+    
+//    for (int i = 1; i < buffer.getNumChannels(); ++i)
+//        buffer.copyFrom (i, 0, buffer.getReadPointer (0), buffer.getNumSamples());
 
     // MAGIC GUI: send the finished buffer to the level meter
     outputMeter->pushSamples (buffer);

@@ -2,8 +2,8 @@
   ==============================================================================
 
     BuchlaSynth.cpp
-    Created: 29 Nov 2020 7:54:50pm
-    Author:  Rishi D
+    Created: 10 Nov 2020 7:54:50pm
+    Author:  Rishikesh Daoo
 
   ==============================================================================
 */
@@ -261,6 +261,17 @@ juce::ADSR::Parameters BuchlaSynth::BuchlaSound::getVCA5()
     return parameters;
 }
 
+juce::ADSR::Parameters BuchlaSynth::BuchlaSound::getVCA6()
+{
+    juce::ADSR::Parameters parameters;
+    parameters.attack  = attack6->get();
+    parameters.decay   = decay6->get();
+    parameters.sustain = sustain6->get();
+    parameters.release = release6->get();
+
+    return parameters;
+}
+
 //==============================================================================
 
 BuchlaSynth::BuchlaVoice::BuchlaVoice (juce::AudioProcessorValueTreeState& state)
@@ -278,8 +289,31 @@ BuchlaSynth::BuchlaVoice::BuchlaVoice (juce::AudioProcessorValueTreeState& state
     gainParameter = dynamic_cast<juce::AudioParameterFloat*>(state.getParameter (IDs::paramGain));
     jassert (gainParameter);
 
-    oscillatorBuffer.setSize (1, internalBufferSize);
-    voiceBuffer.setSize (1, internalBufferSize);
+    oscillatorBuffer1.setSize (1, internalBufferSize);
+    oscillatorBuffer2.setSize (1, internalBufferSize);
+    oscillatorBuffer3.setSize (1, internalBufferSize);
+    oscillatorBuffer4.setSize (1, internalBufferSize);
+    
+    vcaBuffer1.setSize (1, internalBufferSize);
+    vcaBuffer2.setSize (1, internalBufferSize);
+    vcaBuffer3.setSize (1, internalBufferSize);
+    vcaBuffer4.setSize (1, internalBufferSize);
+    vcaBuffer5.setSize (1, internalBufferSize);
+    vcaBuffer6.setSize (1, internalBufferSize);
+    
+    // use a default samplerate and vector size here, reset it later
+    m_C74PluginState = (CommonState *)C74_GENPLUGIN::create(44100, 64);
+    C74_GENPLUGIN::reset(m_C74PluginState);
+
+    m_InputBuffers = new t_sample *[C74_GENPLUGIN::num_inputs()];
+    m_OutputBuffers = new t_sample *[C74_GENPLUGIN::num_outputs()];
+    
+//    for (int i = 0; i < C74_GENPLUGIN::num_inputs(); i++) {
+//        m_InputBuffers[i] = NULL;
+//    }
+//    for (int i = 0; i < C74_GENPLUGIN::num_outputs(); i++) {
+//        m_OutputBuffers[i] = NULL;
+//    }
 }
 
 bool BuchlaSynth::BuchlaVoice::canPlaySound (juce::SynthesiserSound* sound)
@@ -307,10 +341,20 @@ void BuchlaSynth::BuchlaVoice::startNote ([[maybe_unused]]int midiNoteNumber,
     if (auto* buchlaSound = dynamic_cast<BuchlaSound*>(sound))
         vca5.setParameters (buchlaSound->getVCA5());
     
+    if (auto* buchlaSound = dynamic_cast<BuchlaSound*>(sound))
+        vca6.setParameters (buchlaSound->getVCA6());
+    
     pitchWheelValue = getDetuneFromPitchWheel (currentPitchWheelPosition);
 
-    vca1.noteOn();
-
+//    vca1.noteOn();
+//    vca2.noteOn();
+//    vca3.noteOn();
+//    vca4.noteOn();
+//    vca5.noteOn();
+//    vca6.noteOn();
+    
+    
+    
     for (auto& osc : oscillators)
         updateFrequency (*osc, true);
 }
@@ -321,12 +365,24 @@ void BuchlaSynth::BuchlaVoice::stopNote ([[maybe_unused]]float velocity,
     if (allowTailOff)
     {
         vca1.noteOff();
+        vca2.noteOff();
+        vca3.noteOff();
+        vca4.noteOff();
+        vca5.noteOff();
+        vca6.noteOff();
     }
     else
     {
         vca1.reset();
+        vca2.reset();
+        vca3.reset();
+        vca4.reset();
+        vca5.reset();
+        vca6.reset();
         clearCurrentNote();
     }
+
+    clearCurrentNote();
 }
 
 void BuchlaSynth::BuchlaVoice::pitchWheelMoved (int newPitchWheelValue)
@@ -342,33 +398,132 @@ void BuchlaSynth::BuchlaVoice::renderNextBlock (juce::AudioBuffer<float>& output
                                                 int startSample,
                                                 int numSamples)
 {
+    
     if (! vca1.isActive())
         return;
 
     while (numSamples > 0)
     {
-        auto left = std::min (numSamples, oscillatorBuffer.getNumSamples());
-        auto block = juce::dsp::AudioBlock<float> (oscillatorBuffer).getSingleChannelBlock (0).getSubBlock (0, size_t (left));
-
-        juce::dsp::ProcessContextReplacing<float> context (block);
-        voiceBuffer.clear();
-        for (auto& osc : oscillators)
-        {
-            auto oscGain = osc->gain->get();
-            if (oscGain < 0.01)
-                continue;
-
-            updateFrequency (*osc);
-            osc->osc.get<1>().setGainLinear (oscGain);
-            oscillatorBuffer.clear();
-            osc->osc.process (context);
-            voiceBuffer.addFrom (0, 0, oscillatorBuffer.getReadPointer (0), left);
+        auto left = std::min (numSamples, oscillatorBuffer1.getNumSamples());
+        
+        auto block1 = juce::dsp::AudioBlock<float> (oscillatorBuffer1).getSingleChannelBlock (0).getSubBlock (0, size_t (left));
+        auto block2 = juce::dsp::AudioBlock<float> (oscillatorBuffer1).getSingleChannelBlock (0).getSubBlock (0, size_t (left));
+        auto block3 = juce::dsp::AudioBlock<float> (oscillatorBuffer1).getSingleChannelBlock (0).getSubBlock (0, size_t (left));
+        auto block4 = juce::dsp::AudioBlock<float> (oscillatorBuffer1).getSingleChannelBlock (0).getSubBlock (0, size_t (left));
+        
+        juce::dsp::ProcessContextReplacing<float> context1 (block1);
+        juce::dsp::ProcessContextReplacing<float> context2 (block2);
+        juce::dsp::ProcessContextReplacing<float> context3 (block3);
+        juce::dsp::ProcessContextReplacing<float> context4 (block4);
+        
+        auto& osc1 = oscillators[0];
+        auto oscGain = osc1->gain->get();
+        if (oscGain < 0.01)
+            continue;
+        updateFrequency (*osc1);
+        osc1->osc.get<1>().setGainLinear (oscGain);
+        oscillatorBuffer1.clear();
+        osc1->osc.process (context1);
+        
+        auto& osc2 = oscillators[0];
+        auto oscGain2 = osc2->gain->get();
+        if (oscGain2 < 0.01)
+            continue;
+        updateFrequency (*osc2);
+        osc2->osc.get<1>().setGainLinear (oscGain);
+        oscillatorBuffer1.clear();
+        osc2->osc.process (context1);
+        
+        auto& osc3 = oscillators[0];
+        auto oscGain3 = osc3->gain->get();
+        if (oscGain3 < 0.01)
+            continue;
+        updateFrequency (*osc1);
+        osc3->osc.get<1>().setGainLinear (oscGain);
+        oscillatorBuffer1.clear();
+        osc3->osc.process (context1);
+        
+        auto& osc4 = oscillators[0];
+        auto oscGain4 = osc4->gain->get();
+        if (oscGain4 < 0.01)
+            continue;
+        updateFrequency (*osc1);
+        osc4->osc.get<1>().setGainLinear (oscGain);
+        oscillatorBuffer1.clear();
+        osc4->osc.process (context1);
+        
+        // create fake vcas
+        vca1.applyEnvelopeToBuffer (vcaBuffer1, 0, left);
+        vca2.applyEnvelopeToBuffer (vcaBuffer2, 0, left);
+        vca3.applyEnvelopeToBuffer (vcaBuffer3, 0, left);
+        vca4.applyEnvelopeToBuffer (vcaBuffer4, 0, left);
+        vca5.applyEnvelopeToBuffer (vcaBuffer5, 0, left);
+        vca6.applyEnvelopeToBuffer (vcaBuffer6, 0, left);
+        
+        std::cout << vcaBuffer1.getSample(0, 100);
+        
+        for(int i=0; i < C74_GENPLUGIN::num_inputs(); ++i){
+            m_InputBuffers[i] = new t_sample[left]();
+            }
+        
+        for(int i=0; i < C74_GENPLUGIN::num_outputs(); ++i){
+            m_OutputBuffers[i] = new t_sample[left]();
+            }
+        
+        // GEN processing?: 10xgetNumSamples - 2xgetNumSamples
+        // fill input buffers by using 4 oscillatorBuffers and 6 adsrs
+        for (int j = 0; j < left; j++) {
+            m_InputBuffers[0][j] = oscillatorBuffer1.getReadPointer(0)[j];
         }
+        for (int j = 0; j < left; j++) {
+            m_InputBuffers[1][j] = oscillatorBuffer2.getReadPointer(0)[j];
+        }
+        for (int j = 0; j < left; j++) {
+            m_InputBuffers[2][j] = oscillatorBuffer3.getReadPointer(0)[j];
+        }
+        for (int j = 0; j < left; j++) {
+            m_InputBuffers[3][j] = oscillatorBuffer4.getReadPointer(0)[j];
+        }
+        for (int j = 0; j < left; j++) {
+            m_InputBuffers[4][j] = vcaBuffer1.getReadPointer(0)[j];
+        }
+        for (int j = 0; j < left; j++) {
+            m_InputBuffers[5][j] = vcaBuffer2.getReadPointer(0)[j];
+        }
+        for (int j = 0; j < left; j++) {
+            m_InputBuffers[6][j] = vcaBuffer3.getReadPointer(0)[j];
+        }
+        for (int j = 0; j < left; j++) {
+            m_InputBuffers[7][j] = vcaBuffer4.getReadPointer(0)[j];
+        }
+        for (int j = 0; j < left; j++) {
+            m_InputBuffers[8][j] = vcaBuffer5.getReadPointer(0)[j];
+        }
+        for (int j = 0; j < left; j++) {
+            m_InputBuffers[9][j] = vcaBuffer6.getReadPointer(0)[j];
+        }
+        
+        // process audio : 10x512 - 2x512
+        C74_GENPLUGIN::perform(m_C74PluginState,
+                                      m_InputBuffers,
+                                      C74_GENPLUGIN::num_inputs(),
+                                      m_OutputBuffers,
+                                      C74_GENPLUGIN::num_outputs(),
+                                      oscillatorBuffer1.getNumSamples());
 
-        vca1.applyEnvelopeToBuffer (voiceBuffer, 0, left);
-
+        // fill output buffers into internal JUCE buffer
+        for (int i = 0; i < oscillatorBuffer1.getNumChannels(); i++) {
+            if (i < C74_GENPLUGIN::num_outputs()) {
+                for (int j = 0; j < left; j++) {
+                    outputBuffer.getWritePointer(i)[j] = m_OutputBuffers[i][j];
+                }
+            } else {
+                outputBuffer.clear (i, 0, oscillatorBuffer1.getNumSamples());
+            }
+        }
         const auto gain = gainParameter->get();
-        outputBuffer.addFromWithRamp (0, startSample, voiceBuffer.getReadPointer (0), left, lastGain, gain);
+        // final output gets rid of pops
+        outputBuffer.addFromWithRamp (0, startSample, outputBuffer.getReadPointer (0), left, lastGain, gain);
         lastGain = gain;
 
         startSample += left;
@@ -407,4 +562,21 @@ void BuchlaSynth::BuchlaVoice::updateFrequency (BaseOscillator& oscillator, bool
                                            pitchWheelValue * maxPitchWheelSemitones
                                            + oscillator.detune->get());
     oscillator.osc.get<0>().setFrequency (float (freq * oscillator.multiplier), noteStart);
+}
+
+
+void BuchlaSynth::BuchlaVoice::assureBufferSize(long bufferSize)
+{
+    if (bufferSize > m_CurrentBufferSize) {
+        for (int i = 0; i < C74_GENPLUGIN::num_inputs(); i++) {
+            if (m_InputBuffers[i]) delete m_InputBuffers[i];
+            m_InputBuffers[i] = new t_sample[bufferSize];
+        }
+        for (int i = 0; i < C74_GENPLUGIN::num_outputs(); i++) {
+            if (m_OutputBuffers[i]) delete m_OutputBuffers[i];
+            m_OutputBuffers[i] = new t_sample[bufferSize];
+        }
+        
+        m_CurrentBufferSize = bufferSize;
+    }
 }

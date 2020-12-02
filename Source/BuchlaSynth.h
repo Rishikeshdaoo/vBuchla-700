@@ -2,8 +2,8 @@
   ==============================================================================
 
     BuchlaSynth.h
-    Created: 29 Nov 2020 7:54:50pm
-    Author:  Rishi D
+    Created: 10 Nov 2020 7:54:50pm
+    Author:  Rishikesh Daoo
 
   ==============================================================================
 */
@@ -11,6 +11,7 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "C74_GENPLUGIN.h"
 
 class BuchlaSynth : public juce::Synthesiser
 {
@@ -35,6 +36,7 @@ public:
         juce::ADSR::Parameters getVCA3();
         juce::ADSR::Parameters getVCA4();
         juce::ADSR::Parameters getVCA5();
+        juce::ADSR::Parameters getVCA6();
     
     private:
         juce::AudioProcessorValueTreeState& state;
@@ -97,6 +99,7 @@ public:
 
         void setCurrentPlaybackSampleRate (double newRate) override;
 
+        void assureBufferSize(long bufferSize);
     private:
 
         class BaseOscillator
@@ -122,17 +125,36 @@ public:
 
         double                      pitchWheelValue = 0.0;
         int                         maxPitchWheelSemitones = 12;
-        const int                   internalBufferSize = 64;
-        juce::AudioBuffer<float>    oscillatorBuffer;
-        juce::AudioBuffer<float>    voiceBuffer;
+        const int                   internalBufferSize = 512;
+        
+        juce::AudioBuffer<float>    **mcBuffer;
+        juce::AudioBuffer<float>    oscillatorBuffer1;
+        juce::AudioBuffer<float>    oscillatorBuffer2;
+        juce::AudioBuffer<float>    oscillatorBuffer3;
+        juce::AudioBuffer<float>    oscillatorBuffer4;
+        
+        juce::AudioBuffer<float>    vcaBuffer1;
+        juce::AudioBuffer<float>    vcaBuffer2;
+        juce::AudioBuffer<float>    vcaBuffer3;
+        juce::AudioBuffer<float>    vcaBuffer4;
+        juce::AudioBuffer<float>    vcaBuffer5;
+        juce::AudioBuffer<float>    vcaBuffer6;
+        
         juce::ADSR                  vca1;
         juce::ADSR                  vca2;
         juce::ADSR                  vca3;
         juce::ADSR                  vca4;
         juce::ADSR                  vca5;
         juce::ADSR                  vca6;
+        
         juce::AudioParameterFloat*  gainParameter = nullptr;
         float                       lastGain = 0.0;
+        
+        CommonState                *m_C74PluginState;
+        
+        long                    m_CurrentBufferSize;
+        t_sample                **m_InputBuffers;
+        t_sample                **m_OutputBuffers;
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (BuchlaVoice)
     };
