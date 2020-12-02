@@ -2,6 +2,8 @@
 
 ## Buchla 700 Recreation Project
 
+![Buchla 700 in Max and JUCE](https://github.com/Rishikeshdaoo/vBuchla-700/blob/master/MaxJUCE_Buchla700.png "Buchla 700 in Max and JUCE")
+
 ## Authors:
 [Sandeep Dasari](https://github.com/sandcobainer/) |
 [Rishikesh Daoo](https://github.com/rishikeshdaoo/)
