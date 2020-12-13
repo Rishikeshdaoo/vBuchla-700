@@ -13,7 +13,9 @@
 The *master branch* has an implementation of a working Synthesizer. 
 
 The *buchlaimplementation branch* has the implementation of one of the recursive configs from Buchla 700. This implementation does not make any sound due to a difference in the signal processing architecture of Buchla700 and how JUCE works.
-More details can be found in this report - 
+More details can be found in this report - [](VIP Fall 2020 - Buchla700.pdf)
+
+
 
 This [repository](https://github.com/sandcobainer/buchla700-MAX) has the complete, working implementation of Buchla 700 in Max/MSP and Gen.
 
